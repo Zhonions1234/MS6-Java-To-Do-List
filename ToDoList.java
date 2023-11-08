@@ -372,7 +372,6 @@ public class ToDoList {
 
     }
     public static void recoverRemovedTasks(String[] toDoList, ArrayList<String> removed) {
-
     }
 
     }
