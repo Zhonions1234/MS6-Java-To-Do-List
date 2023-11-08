@@ -88,7 +88,7 @@ public class ToDoList {
                     recoverRemovedTasks(toDoList, removed);
                     break;
                 case 11:
-                    organizeAlphabetically(toDoList);
+                    taskCount(toDoList);
                     break;
                 case 12:
                     organizeAlphabetically(toDoList);
@@ -406,5 +406,14 @@ public class ToDoList {
 
     }
 
+    public static void taskCount(String[] toDoList) {
+        int count=0;
+        for (int i = 0; i < toDoList.length; i++) {
+           if(toDoList[i] ==null){
+               count++;
+           }
+        }
+        System.out.println("\u001b[38;5;11mNumber of task: \u001b[0m" + (toDoList.length-count));
+    }
 }
 
