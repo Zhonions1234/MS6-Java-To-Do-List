@@ -73,7 +73,7 @@ public class ToDoList {
                     editTask(toDoList);
                     break;
                 case 6:
-                    deleteTask(toDoList);
+                    deleteTask(toDoList, removed);
                     break;
                 case 7:
                     organizeAlphabetically(toDoList);
@@ -85,7 +85,7 @@ public class ToDoList {
                     removeAllTasksSetAsCompleted(toDoList);
                     break;
                 case 10:
-                    recoverRemovedTasks(toDoList,removed);
+                    recoverRemovedTasks(toDoList, removed);
                     break;
                 case 11:
                     organizeAlphabetically(toDoList);
@@ -126,6 +126,7 @@ public class ToDoList {
 
         } while (userChoice != 0);
     }
+
     public static void showToDoList(String[] toDoList) {
 
         int count = 0;
@@ -274,7 +275,7 @@ public class ToDoList {
         }
     }
 
-    public static void deleteTask(String[] toDoList) {
+    public static void deleteTask(String[] toDoList, ArrayList<String> removed) {
 
         int existedTasks = 0;
         for (int i = 0; i < toDoList.length; i++) {
@@ -290,6 +291,7 @@ public class ToDoList {
 
             if (toDoList[userChoiceOfTaskToDelete] != null) {
                 System.out.println("\u001b[38;5;10mThe task '\u001b[38;5;15m" + toDoList[userChoiceOfTaskToDelete] + "\u001b[38;5;10m' was successfully deleted!\u001b[0m");
+                removed.add(toDoList[userChoiceOfTaskToDelete]);
                 toDoList[userChoiceOfTaskToDelete] = null;
             } else {
                 System.out.println("\u001b[38;5;9mInvalid task option!\u001b[0m");
@@ -355,10 +357,10 @@ public class ToDoList {
         }
 
         if (existedTasks > 0) {
-            int counter =0;
+            int counter = 0;
             for (int i = 0; i < toDoList.length; i++) {
-                if (toDoList[i] != null && toDoList[i].contains(" ✅")){
-                    if(counter==0){
+                if (toDoList[i] != null && toDoList[i].contains(" ✅")) {
+                    if (counter == 0) {
                         System.out.println();
                         System.out.println("\u001b[38;5;10mAll tasks completed was successfully deleted!\u001b[0m");
                     }
@@ -371,8 +373,38 @@ public class ToDoList {
         }
 
     }
+
     public static void recoverRemovedTasks(String[] toDoList, ArrayList<String> removed) {
-    }
+        int existedTasks = 0;
+        for (int i = 0; i < removed.size(); i++) {
+            if (removed.get(i) != null) {
+                System.out.println(i + " - " + removed.get(i));
+                existedTasks++;
+            }
+        }
+        if (existedTasks > 0) {
+            System.out.print("\n\u001b[38;5;15mChoose a task to delete: \u001b[0m");
+            int userChoiceOfTaskToRecovery = scan.nextInt();
+
+            if (userChoiceOfTaskToRecovery >= 0 && userChoiceOfTaskToRecovery < removed.size())
+                if (removed.get(userChoiceOfTaskToRecovery) != null) {
+                    String recoveredTask = removed.get(userChoiceOfTaskToRecovery);
+                    System.out.println("\u001b[38;5;10mThe task '\u001b[38;5;15m" + recoveredTask + "\u001b[38;5;10m' was successfully recovered!\u001b[0m");
+                    for (int i = 0; i < toDoList.length; i++) {
+                        if (toDoList[i] == null) {
+                            toDoList[i] = removed.get(userChoiceOfTaskToRecovery);
+                            break;
+                        }
+                    }
+                    removed.remove(recoveredTask);
+                } else {
+                    System.out.println("\u001b[38;5;9mInvalid task option!\u001b[0m");
+                }
+        } else {
+            System.out.println("\u001b[38;5;9mYou don't have tasks to recovery!\u001b[0m");
+        }
 
     }
+
+}
 
