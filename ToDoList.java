@@ -11,6 +11,7 @@ public class ToDoList {
 
         boolean premiumPlan = false;
         String[] toDoList;
+        ArrayList<String> removed = new ArrayList<String>();
 
         if (!premiumPlan) {
             System.out.println("\n\t\t\t\t\u001b[43;1m\u001b[38;5;15mIMPORTANT WARNING\u001b[0m\u001b[38;5;11m\nYou are currently using the Free Plan of ToDoList!\nYou can upgrade to Premium Plan in the upgrade menu!\u001b[0m");
@@ -84,7 +85,7 @@ public class ToDoList {
                     removeAllTasksSetAsCompleted(toDoList);
                     break;
                 case 10:
-                    recoverRemovedTasks(toDoList);
+                    recoverRemovedTasks(toDoList,removed);
                     break;
                 case 11:
                     organizeAlphabetically(toDoList);
